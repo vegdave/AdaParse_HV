@@ -1,0 +1,17 @@
+pdf_dir: /home/dave_sava/AdaParse/input_pdfs
+out_dir: /home/dave_sava/AdaParse/output_json
+workflow: full
+
+# AdaParse *requires* zipped input
+iszip: true
+
+parser_settings:
+  name: adaparse
+  extract_text: true
+  ocr: false
+  language: en
+  output_naming: "{pdf_name}.jsonl"
+
+compute_settings:
+  engine: local
+  max_workers: 4
