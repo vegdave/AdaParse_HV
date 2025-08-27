@@ -2,16 +2,61 @@ pdf_dir: /home/dave_sava/AdaParse/input_pdfs
 out_dir: /home/dave_sava/AdaParse/output_json
 workflow: full
 
-# AdaParse *requires* zipped input
 iszip: true
 
+# Temporary storage (optional)
+tmp_storage: /home/dave_sava/AdaParse/tmp
+
+# Parser settings
 parser_settings:
-  name: adaparse
-  extract_text: true
-  ocr: false
-  language: en
-  output_naming: "{pdf_name}.jsonl"
+  NougatParserConfig:
+    name: nougat
+    checkpoint: /home/dave_sava/AdaParse/checkpoints/nougat
+    batchsize: 5
+    recompute: true
+    markdown: true
+    nougat_logs_path: /home/dave_sava/AdaParse/logs
+
+  PyMuPDFParserConfig:
+    name: pymupdf
+
+  PyPDFParserConfig:
+    name: pypdf
+
+  TesseractParserConfig:
+    name: tesseract
+    ocr: true
 
 compute_settings:
-  engine: local
-  max_workers: 4
+  name: local
+  max_workers: 2
+  chunk_size: 1
+  rename_output: true
+
+
+
+# OLD STUFF REMOVE BEFORE USE
+parser_settings:
+  name: adaparse
+  alpha: 0.05
+  batchsize: 5
+  checkpoint: /home/dave_sava/AdaParse/checkpoints/nougat
+  mmd_out: null
+  recompute: true       # always parse PDFs for testing
+  full_precision: false
+  markdown: true
+  skipping: false   # don’t skip any PDFs
+  nougat_logs_path: /home/dave_sava/AdaParse/logs
+  weights_path: distilbert-base-uncased
+  batch_size: 16          # smaller batch size for laptop
+  max_character_length: 1024
+  num_data_workers: 1
+  pin_memory: false
+
+# Local compute settings (Parsl)
+compute_settings:
+  name: local           # LocalProvider for Parsl
+  max_workers: 2        # number of CPU cores to use
+  chunk_size: 5         # number of PDFs per worker/batch
+  rename_output: true   # optional: rename JSONL files based on PDF names
+  cores_per_worker: 1

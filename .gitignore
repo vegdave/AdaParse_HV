@@ -5,6 +5,11 @@ output_json/
 *.pdf
 *.tmp
 *.log
+checkpoints/
+tmp/
+tmp_pdf_storage/
+logs/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
