@@ -1,3 +1,11 @@
+# Local additions
+input_pdfs/
+output_json/
+*.zip
+*.pdf
+*.tmp
+*.log
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
