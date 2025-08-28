@@ -9,7 +9,10 @@ checkpoints/
 tmp/
 tmp_pdf_storage/
 logs/
-
+checkpoints/
+test_output/
+local_py_tests/
+pdf_tmp_storage/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

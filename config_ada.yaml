@@ -1,0 +1,64 @@
+pdf_dir: /home/dave_sava/AdaParse/input_pdfs
+out_dir: /home/dave_sava/AdaParse/output_json
+workflow: full
+
+iszip: true
+
+# Temporary storage (optional)
+tmp_storage: /home/dave_sava/AdaParse/tmp
+
+# Parser settings
+parser_settings:
+  device: cpu
+  num_data_workers: 0
+
+  # The name of the parser to use
+  name: adaparse
+
+  # Max. proportion of high-quality parser (Nougat): throughput-sensitive
+  alpha: 0.2
+
+  # The Nougat parser settings
+  batchsize: 2
+  # Path to download the checkpoint to. if already exists, will use existing.
+  checkpoint: /home/dave_sava/AdaParse/checkpoints/nougat-checkpoint
+  # Set mmd_out to null if you don't want to write mmd files as a byproduct.
+  mmd_out: /home/dave_sava/AdaParse/logs/mmd_out
+  # If set to false, will skip the pdfs that already have a parsed mmd file in mmd_out
+  recompute: false
+  # Set to true if you want to use fp32 instead of bfloat16 (false is recommended)
+  full_precision: false
+  # If set to true, output text will be formatted as a markdown file.
+  markdown: true
+  # Preempt processing a paper if mode collapse causes repetitions (true is recommended)
+  skipping: false
+  # Path for the nougat-specific logs for the run.
+  nougat_logs_path: /home/dave_sava/AdaParse/logs/nougat_logs
+
+  # The AdaParse classifier settings
+  # The HF identifier or path to the fine-tuned regression model
+  weights_path: distilbert-base-uncased
+  # The batch size for the classifier.
+  batch_size: 64
+  # The maximum length of the input text (in characters).
+  max_character_length: 1024
+  # The number of data workers for the classifier.
+  num_data_workers: 1
+  # Whether to pin memory for the classifier.
+  pin_memory: true
+
+# Local compute settings
+compute_settings:
+  name: local
+  # number of parallel workers
+  max_workers: 1
+  worker_init: "conda activate adaparse"
+  # PDFs per worker
+  chunk_size: 1
+  # optional: name JSONL files after PDFs
+  rename_output: true
+  # No of cpus for each worker
+  cores_per_worker: 1
+
+
+
